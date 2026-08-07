@@ -23,3 +23,11 @@ CREATE TABLE vehiculos (
     anio INT NOT NULL,
     FOREIGN KEY (cliente_id) REFERENCES clientes(id)
 ) ENGINE=InnoDB;
+
+-- 4. Tabla de Mecánicos
+CREATE TABLE mecanicos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    especialidad VARCHAR(100) NOT NULL,
+    activo BOOLEAN DEFAULT 1
+) ENGINE=InnoDB;
