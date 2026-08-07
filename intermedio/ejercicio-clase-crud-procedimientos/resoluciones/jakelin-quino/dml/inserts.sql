@@ -32,3 +32,16 @@ INSERT INTO servicios (nombre, categoria, precio_base, duracion_min) VALUES
 ('Revisión y Aseo Carbocerámico', 'Frenos', 450.00, 90),
 ('Ajuste Fino Motor V12 / V10', 'Motor', 1200.00, 240),
 ('Service Oficial Superbike', 'Moto GP/Track', 500.00, 180);
+
+-- Insertar Citas Iniciales
+INSERT INTO citas_servicio (vehiculo_id, servicio_id, mecanico_id, fecha_programada, estado, precio_final, notas) VALUES
+(1, 2, 3, '2026-08-07 15:30:00', 'pendiente', 850.00, 'Revisión previa a carrera'),
+(2, 5, 1, '2026-08-07 16:00:00', 'pendiente', 500.00, 'Ajuste de suspensión de pista'),
+(3, 4, 2, '2026-08-08 10:00:00', 'en_proceso', 1200.00, 'Ruido en bajas revoluciones'),
+(4, 5, 1, '2026-08-08 11:30:00', 'completada', 550.00, 'Cambio de neumáticos slicks'),
+(5, 1, 2, '2026-08-09 08:00:00', 'cancelada', 150.00, 'Cliente viajó de emergencia'),
+(6, 2, 3, '2026-08-10 14:00:00', 'pendiente', 850.00, 'Poner a punto mapas de motor'),
+(7, 3, 1, '2026-08-10 16:30:00', 'en_proceso', 450.00, 'Cambio de líquido de frenos de alta ebullición'),
+(1, 3, 2, '2026-08-11 09:00:00', 'completada', 480.00, 'Chequeo de discos traseros'),
+(2, 1, 1, '2026-08-11 11:00:00', 'completada', 150.00, 'Cambio de aceite sintético'),
+(3, 2, 3, '2026-08-12 15:00:00', 'pendiente', 850.00, 'Verificación de alerón activo');
