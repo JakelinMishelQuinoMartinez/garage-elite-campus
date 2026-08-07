@@ -1,3 +1,11 @@
+-- Eliminar base de datos y tablas si existen para ejecutar desde cero
+DROP DATABASE IF EXISTS garage_elite_campus;
+DROP TABLE IF EXISTS citas_servicio;
+DROP TABLE IF EXISTS servicios;
+DROP TABLE IF EXISTS mecanicos;
+DROP TABLE IF EXISTS vehiculos;
+DROP TABLE IF EXISTS clientes;
+
 -- 1. Crear y seleccionar la base de datos
 CREATE DATABASE IF NOT EXISTS garage_elite_campus;
 USE garage_elite_campus;
