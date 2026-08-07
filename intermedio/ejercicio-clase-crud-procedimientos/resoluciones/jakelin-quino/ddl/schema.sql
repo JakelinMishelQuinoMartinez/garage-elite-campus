@@ -11,3 +11,15 @@ CREATE TABLE clientes (
     estado ENUM('activo', 'inactivo') DEFAULT 'activo',
     creado_en TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB;
+
+-- 3. Tabla de Vehículos
+CREATE TABLE vehiculos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    cliente_id INT NOT NULL,
+    tipo ENUM('moto', 'auto_lujo', 'hiperdeportivo') NOT NULL,
+    marca VARCHAR(50) NOT NULL,
+    modelo VARCHAR(50) NOT NULL,
+    placa VARCHAR(10) NOT NULL UNIQUE,
+    anio INT NOT NULL,
+    FOREIGN KEY (cliente_id) REFERENCES clientes(id)
+) ENGINE=InnoDB;
