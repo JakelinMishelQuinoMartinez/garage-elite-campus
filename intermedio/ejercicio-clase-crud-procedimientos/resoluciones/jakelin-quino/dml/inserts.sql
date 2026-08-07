@@ -24,3 +24,11 @@ INSERT INTO mecanicos (nombre, especialidad, activo) VALUES
 ('Andrés Gómez', 'Autos de Lujo y Motores V12', 1),
 ('Sofia Chen', 'Telemetría e Hiperdeportivos', 1),
 ('Lucas Silva', 'Suspensiones y Frenos Pista', 0);
+
+-- Insertar Servicios
+INSERT INTO servicios (nombre, categoria, precio_base, duracion_min) VALUES
+('Mantenimiento Preventivo Básico', 'General', 150.00, 60),
+('Calibración Telemetría Pista', 'Alto Rendimiento', 850.00, 120),
+('Revisión y Aseo Carbocerámico', 'Frenos', 450.00, 90),
+('Ajuste Fino Motor V12 / V10', 'Motor', 1200.00, 240),
+('Service Oficial Superbike', 'Moto GP/Track', 500.00, 180);
