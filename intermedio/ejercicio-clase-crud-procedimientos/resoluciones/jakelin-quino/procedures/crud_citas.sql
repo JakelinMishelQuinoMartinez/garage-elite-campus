@@ -68,4 +68,40 @@ BEGIN
     ORDER BY c.fecha_programada ASC;
 END //
 
+-- 3. ACTUALIZAR CITA
+CREATE PROCEDURE sp_actualizar_cita_servicio(
+    IN p_cita_id INT,
+    IN p_mecanico_id INT,
+    IN p_fecha_programada DATETIME,
+    IN p_estado VARCHAR(20),
+    IN p_precio_final DECIMAL(10,2),
+    IN p_notas TEXT
+)
+BEGIN
+    DECLARE v_estado_actual VARCHAR(20);
+
+    -- Obtener estado actual
+    SELECT estado INTO v_estado_actual FROM citas_servicio WHERE id = p_cita_id;
+
+    IF v_estado_actual IS NULL THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: La cita no existe.';
+    END IF;
+
+    IF v_estado_actual = 'cancelada' THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: No se puede modificar una cita cancelada.';
+    END IF;
+
+    IF p_estado NOT IN ('pendiente', 'en_proceso', 'completada', 'cancelada') THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: Estado no permitido.';
+    END IF;
+
+    UPDATE citas_servicio 
+    SET mecanico_id = p_mecanico_id,
+        fecha_programada = p_fecha_programada,
+        estado = p_estado,
+        precio_final = p_precio_final,
+        notas = p_notas
+    WHERE id = p_cita_id;
+END //
+
 DELIMITER ;
