@@ -1,4 +1,4 @@
-USE campuslands_mysql;
+USE garage_elite_campus;
 
 -- 1. Listado de citas pendientes ordenadas por fecha más cercana
 SELECT c.id, cl.nombre AS cliente, v.placa, c.fecha_programada, c.estado 
