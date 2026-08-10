@@ -128,4 +128,20 @@ BEGIN
     WHERE id = p_cita_id;
 END //
 
+-- 5. ELIMINAR CITA BORRADOR 
+CREATE PROCEDURE sp_eliminar_cita_borrador(
+    IN p_cita_id INT
+)
+BEGIN
+    DECLARE v_estado VARCHAR(20);
+
+    SELECT estado INTO v_estado FROM citas_servicio WHERE id = p_cita_id;
+
+    IF v_estado != 'pendiente' OR v_estado IS NULL THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: Solo se pueden eliminar citas físicas si están en estado PENDIENTE.';
+    END IF;
+
+    DELETE FROM citas_servicio WHERE id = p_cita_id;
+END //
+
 DELIMITER ;
