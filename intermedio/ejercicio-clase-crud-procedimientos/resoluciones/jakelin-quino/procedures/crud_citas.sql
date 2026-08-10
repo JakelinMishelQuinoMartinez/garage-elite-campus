@@ -104,4 +104,28 @@ BEGIN
     WHERE id = p_cita_id;
 END //
 
+-- 4. CANCELAR CITA (Soft Delete)
+CREATE PROCEDURE sp_cancelar_cita_servicio(
+    IN p_cita_id INT,
+    IN p_motivo TEXT
+)
+BEGIN
+    DECLARE v_estado_actual VARCHAR(20);
+
+    SELECT estado INTO v_estado_actual FROM citas_servicio WHERE id = p_cita_id;
+
+    IF v_estado_actual IS NULL THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: Cita inexistente.';
+    END IF;
+
+    IF v_estado_actual = 'completada' THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: No se puede cancelar una cita que ya fue completada.';
+    END IF;
+
+    UPDATE citas_servicio
+    SET estado = 'cancelada',
+        notas = CONCAT(COALESCE(notas, ''), ' | MOTIVO CANCELACIÓN: ', p_motivo)
+    WHERE id = p_cita_id;
+END //
+
 DELIMITER ;
