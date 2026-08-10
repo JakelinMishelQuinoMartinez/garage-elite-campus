@@ -7,3 +7,8 @@ JOIN vehiculos v ON c.vehiculo_id = v.id
 JOIN clientes cl ON v.cliente_id = cl.id
 WHERE c.estado = 'pendiente'
 ORDER BY c.fecha_programada ASC;
+
+-- 2. Total estimado/cobrado acumulado por estado de cita
+SELECT estado, COUNT(*) AS cantidad_citas, SUM(precio_final) AS total_recaudado
+FROM citas_servicio
+GROUP BY estado;
