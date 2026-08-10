@@ -1,5 +1,12 @@
 USE garage_elite_campus;
 
+-- Drop procedimientos previos si existen
+DROP PROCEDURE IF EXISTS sp_crear_cita_servicio;
+DROP PROCEDURE IF EXISTS sp_listar_citas_servicio;
+DROP PROCEDURE IF EXISTS sp_actualizar_cita_servicio;
+DROP PROCEDURE IF EXISTS sp_cancelar_cita_servicio;
+DROP PROCEDURE IF EXISTS sp_eliminar_cita_borrador;
+
 DELIMITER //
 
 -- 1. CREAR CITA
