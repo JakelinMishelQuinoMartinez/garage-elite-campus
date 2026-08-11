@@ -21,22 +21,23 @@ CREATE PROCEDURE sp_crear_cita_servicio(
 )
 BEGIN
     DECLARE v_mecanico_activo INT;
-    DECLARE v_existe_vehiculo INT;
+    DECLARE v_existe_mecanico INT;
 
     -- Validar Precio
     IF p_precio_final < 0 THEN
         SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: El precio final no puede ser negativo.';
     END IF;
+
     -- Validar Fecha
     IF p_fecha_programada IS NULL THEN
         SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: La fecha programada es obligatoria.';
     END IF;
 
     -- Validar si el mecánico existe y está activo
-    SELECT COUNT(*), COALESCE(SUM(activo), 0) INTO v_existe_vehiculo, v_mecanico_activo 
+    SELECT COUNT(*), COALESCE(SUM(activo), 0) INTO v_existe_mecanico, v_mecanico_activo 
     FROM mecanicos WHERE id = p_mecanico_id;
 
-    IF v_existe_vehiculo = 0 THEN
+    IF v_existe_mecanico = 0 THEN
         SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: El mecánico asignado no existe.';
     ELSEIF v_mecanico_activo = 0 THEN
         SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: El mecánico asignado se encuentra inactivo.';
@@ -152,3 +153,18 @@ BEGIN
 END //
 
 DELIMITER ;
+
+-- Consultar Citas Pendientes
+CALL sp_listar_citas_servicio('pendiente');
+
+-- Actualizar Cita
+CALL sp_actualizar_cita_servicio(11, 2, '2026-08-08 09:00:00', 'en_proceso', 900.00, 'Cliente autorizo ajuste');
+
+-- Cancelar Cita
+CALL sp_cancelar_cita_servicio(11, 'Cliente reprogramara para otra fecha');
+
+-- Intento de ingresar un precio negativo
+CALL sp_crear_cita_servicio(1, 2, 1, '2026-08-07 15:30:00', -100.00, 'Test precio negativo', @cita_err);
+
+-- Intento de asignar un mecánico inactivo
+CALL sp_crear_cita_servicio(1, 2, 4, '2026-08-07 15:30:00', 500.00, 'Test mecanico inactivo', @cita_err);
